@@ -1,4 +1,4 @@
-import { db } from "@/db"
+import { getDatabase } from "@/db"
 import { Elements } from "@/db/schema"
 
 type ElementData = {
@@ -25,6 +25,8 @@ async function main () {
       symbol, name, atomicNumber: number
     }
   })
+  
+  const db = getDatabase()
   
   await db.delete(Elements)
   await db.insert(Elements).values(values)

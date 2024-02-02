@@ -1,15 +1,15 @@
-import { db } from "@/db";
+import { getDatabase } from "@/db";
 import { Elements } from "@/db/schema";
 
 export const dynamic = 'force-dynamic';
 
-const getElements = async () => {
-  const elements = await db.select().from(Elements)
+const getData = async () => {
+  const elements = await getDatabase().select().from(Elements)
   return elements;
 };
 
 export default async function Home() {
-  const elements = await getElements();
+  const elements = await getData();
 
   return (
     <main className="min-h-screen py-8 flex items-center justify-center bg-[#1A1A1A]">

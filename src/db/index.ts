@@ -3,5 +3,13 @@ import { drizzle } from 'drizzle-orm/neon-http';
 
 neonConfig.fetchConnectionCache = true
 
-const sql = neon(process.env.DATABASE_URL!);
-export const db = drizzle(sql);
+export function getDatabase () {
+  // Workaround until Neon Vercel integration adds this query parameter
+  const url = new URL(process.env.DATABASE_URL!)
+  url.searchParams.set('sslmode', 'require')
+
+  const sql = neon(url.toString());
+  const db = drizzle(sql);
+
+  return db
+}
